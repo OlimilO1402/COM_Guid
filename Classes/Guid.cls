@@ -12,6 +12,12 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+'  GUID = Globally  Unique Identifier       | the base of CLSID and UUID
+' CLSID = Globally  Unique Class Identifier | a CLSID is a GUID that identifies a COM object
+'  UUID = Universal Unique Identifier       | used in IDL files
+
+'
+
 'https://stackoverflow.com/questions/10687505/uuid-format-8-4-4-4-12-why
 'https://www.ietf.org/rfc/rfc4122.txt
 'see chapter: "4.1.2. Layout and Byte Order"
@@ -134,20 +140,33 @@ Friend Function Clone() As Guid
     End With
 End Function
 
+Public Property Let Data1(ByVal Value As Long)
+    m_Guid.Data1 = Value
+End Property
 Public Property Get Data1() As Long
     Data1 = m_Guid.Data1
 End Property
 
+Public Property Let Data2(ByVal Value As Integer)
+    m_Guid.Data2 = Value
+End Property
 Public Property Get Data2() As Integer
     Data2 = m_Guid.Data2
 End Property
 
+Public Property Let Data3(ByVal Value As Integer)
+    m_Guid.Data3 = Value
+End Property
 Public Property Get Data3() As Integer
     Data3 = m_Guid.Data3
 End Property
 
+Public Property Let Data4(ByVal Index As Long, ByVal Value As Byte)
+    If Index < 0 Or 7 < Index Then Exit Property
+    m_Guid.Data4(Index) = Value
+End Property
 Public Property Get Data4(ByVal Index As Long) As Byte
-    If Index > 7 Then Exit Property
+    If Index < 0 Or 7 < Index Then Exit Property
     Data4 = m_Guid.Data4(Index)
 End Property
 
