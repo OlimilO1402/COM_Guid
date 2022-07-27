@@ -94,7 +94,7 @@ Begin VB.Form FMain
       Left            =   120
       TabIndex        =   6
       Top             =   600
-      Width           =   7335
+      Width           =   7455
       Begin VB.TextBox TxtData56 
          BeginProperty Font 
             Name            =   "Consolas"
@@ -376,49 +376,58 @@ Begin VB.Form FMain
    Begin VB.CommandButton Command4 
       Caption         =   "Command4"
       Height          =   375
-      Left            =   4440
+      Left            =   4560
       TabIndex        =   5
-      Top             =   1920
+      Top             =   4080
       Width           =   1335
    End
    Begin VB.CommandButton Command3 
       Caption         =   "Command3"
       Height          =   375
-      Left            =   3000
+      Left            =   3120
       TabIndex        =   4
-      Top             =   1920
+      Top             =   4080
       Width           =   1335
    End
    Begin VB.CommandButton Command2 
       Caption         =   "Command2"
       Height          =   375
-      Left            =   1560
+      Left            =   1680
       TabIndex        =   3
-      Top             =   1920
+      Top             =   4080
       Width           =   1335
    End
    Begin VB.CommandButton Command1 
       Caption         =   "Command1"
       Height          =   375
-      Left            =   120
+      Left            =   240
       TabIndex        =   2
-      Top             =   1920
+      Top             =   4080
       Width           =   1335
    End
    Begin VB.ListBox List1 
-      Height          =   2205
-      Left            =   120
+      BeginProperty Font 
+         Name            =   "Consolas"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   2085
+      Left            =   240
       TabIndex        =   0
-      Top             =   2400
-      Width           =   5655
+      Top             =   1800
+      Width           =   7215
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
       Caption         =   "Label1"
       Height          =   195
-      Left            =   6000
+      Left            =   240
       TabIndex        =   1
-      Top             =   2400
+      Top             =   4560
       Width           =   480
    End
 End
@@ -451,16 +460,19 @@ End Sub
 
 Private Sub BtnCreateGUID_Click()
     Set m_Guid = MNew.GuidCo
+    List1.AddItem m_Guid.ToStr
     UpdateView
 End Sub
 
 Private Sub BtnCreateCLSID_Click()
     Set m_Guid = MNew.GuidCo
+    List1.AddItem m_Guid.ToStr
     UpdateView
 End Sub
 
 Private Sub BtnCreateUUID_Click()
     Set m_Guid = MNew.UUID
+    List1.AddItem m_Guid.ToStr
     UpdateView
 End Sub
 
@@ -510,22 +522,24 @@ Private Sub List1_Click()
     Dim i As Long:   i = List1.ListIndex
     Dim s As String: s = List1.List(i)
     
-    Dim g1 As Guid: Set g1 = MNew.GuidS(s)
-    Dim s1 As String:   s1 = g1.ToStr
+    m_Guid.Parse (s)
+    UpdateView
+    'Dim g1 As Guid: Set g1 = MNew.GuidS(s)
+    'Dim s1 As String:   s1 = g1.ToStr
     
-    Dim g2 As Guid: Set g2 = MNew.GuidS(s1)
-    Dim s2 As String: s2 = g1.ToStr & " = " & g2.ToStr
+    'Dim g2 As Guid: Set g2 = MNew.GuidS(s1)
+    'Dim s2 As String: s2 = g1.ToStr & " = " & g2.ToStr
     
-    Label1.Caption = s & vbCrLf & s1 & vbCrLf & s2 & vbCrLf & g1.IsEqual(g2)
+    'Label1.Caption = s & vbCrLf & s1 & vbCrLf & s2 & vbCrLf & g1.IsEqual(g2)
     
 End Sub
 
 Public Sub UpdateView()
     If CmbDecHex.Text = "Dec" Then
         With m_Guid
-            TxtData1.Text = .Data1
-            TxtData2.Text = .Data2
-            TxtData3.Text = .Data3
+            TxtData1.Text = MUnsigned.UInt32_ToStr(.Data1)
+            TxtData2.Text = MUnsigned.UInt16_ToStr(.Data2)
+            TxtData3.Text = MUnsigned.UInt16_ToStr(.Data3)
             TxtData41.Text = .Data4(0)
             TxtData42.Text = .Data4(1)
             TxtData51.Text = .Data4(2)
@@ -535,7 +549,7 @@ Public Sub UpdateView()
             TxtData55.Text = .Data4(6)
             TxtData56.Text = .Data4(7)
         End With
-    Else
+    ElseIf CmbDecHex.Text = "Hex" Then
         With m_Guid
             TxtData1.Text = Hex(.Data1)
             TxtData2.Text = Hex(.Data2)
