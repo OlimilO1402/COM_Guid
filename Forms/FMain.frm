@@ -4,10 +4,10 @@ Begin VB.Form FMain
    ClientHeight    =   6795
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   9540
+   ClientWidth     =   7695
    LinkTopic       =   "Form1"
    ScaleHeight     =   6795
-   ScaleWidth      =   9540
+   ScaleWidth      =   7695
    StartUpPosition =   3  'Windows-Standard
    Begin VB.ComboBox CmbDecHex 
       BeginProperty Font 
@@ -565,3 +565,52 @@ Public Sub UpdateView()
         End With
     End If
 End Sub
+
+Private Sub TxtData1_LostFocus()
+    Dim s As String: s = TxtData1
+    If CmbDecHex.Text = "Dec" Then
+        Dim v As Long: v = MUnsigned.UInt32_Parse(s)
+        m_Guid.Data1 =
+    Else
+        
+    End If
+    
+End Sub
+
+Private Sub TxtData2_LostFocus()
+
+End Sub
+
+Private Sub TxtData3_LostFocus()
+
+End Sub
+
+Private Sub TxtData41_LostFocus()
+
+End Sub
+
+Private Sub TxtData42_LostFocus()
+
+End Sub
+
+Private Sub TxtData43_LostFocus()
+
+End Sub
+
+Private Sub TxtData44_LostFocus()
+
+End Sub
+
+Private Sub TxtData45_LostFocus()
+
+End Sub
+
+Private Sub TxtData46_LostFocus()
+
+End Sub
+
+Private Sub TxtData47_LostFocus()
+
+End Sub
+
+
