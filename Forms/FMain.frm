@@ -567,30 +567,15 @@ Public Sub UpdateView()
 End Sub
 
 Private Sub TxtData1_LostFocus()
-    Dim s As String: s = TxtData1
-    If CmbDecHex.Text = "Dec" Then
-        Dim v As Long: v = MUnsigned.UInt32_Parse(s)
-        m_Guid.Data1 =
+    Dim s As String: s = TxtData1.Text
+    If CmbDecHex.ListIndex = 0 Then '.Text = "Dec"
+        Dim v As Long
+        if MUnsigned.UInt32_tryParse(s)
+        m_Guid.Data1 = MUnsigned.UInt32_Parse(s)
     Else
         
     End If
     
-End Sub
-
-Private Sub TxtData2_LostFocus()
-
-End Sub
-
-Private Sub TxtData3_LostFocus()
-
-End Sub
-
-Private Sub TxtData41_LostFocus()
-
-End Sub
-
-Private Sub TxtData42_LostFocus()
-
 End Sub
 
 Private Sub TxtData43_LostFocus()
