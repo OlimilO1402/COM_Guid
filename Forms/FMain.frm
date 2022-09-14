@@ -1,12 +1,12 @@
 VERSION 5.00
 Begin VB.Form FMain 
-   Caption         =   "FMain"
-   ClientHeight    =   6795
+   Caption         =   "GUID/CLSID/UUID"
+   ClientHeight    =   3975
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   7695
    LinkTopic       =   "Form1"
-   ScaleHeight     =   6795
+   ScaleHeight     =   3975
    ScaleWidth      =   7695
    StartUpPosition =   3  'Windows-Standard
    Begin VB.ComboBox CmbDecHex 
@@ -23,7 +23,7 @@ Begin VB.Form FMain
       ItemData        =   "FMain.frx":0000
       Left            =   4440
       List            =   "FMain.frx":000A
-      TabIndex        =   26
+      TabIndex        =   21
       Text            =   "Hex"
       Top             =   120
       Width           =   855
@@ -41,7 +41,7 @@ Begin VB.Form FMain
       EndProperty
       Height          =   375
       Left            =   3000
-      TabIndex        =   25
+      TabIndex        =   20
       Top             =   120
       Width           =   1335
    End
@@ -58,7 +58,7 @@ Begin VB.Form FMain
       EndProperty
       Height          =   375
       Left            =   1560
-      TabIndex        =   24
+      TabIndex        =   19
       Top             =   120
       Width           =   1335
    End
@@ -75,7 +75,7 @@ Begin VB.Form FMain
       EndProperty
       Height          =   375
       Left            =   120
-      TabIndex        =   23
+      TabIndex        =   18
       Top             =   120
       Width           =   1335
    End
@@ -92,7 +92,7 @@ Begin VB.Form FMain
       EndProperty
       Height          =   1095
       Left            =   120
-      TabIndex        =   6
+      TabIndex        =   1
       Top             =   600
       Width           =   7455
       Begin VB.TextBox TxtData56 
@@ -107,7 +107,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   6720
-         TabIndex        =   22
+         TabIndex        =   17
          Text            =   "255"
          Top             =   600
          Width           =   435
@@ -124,7 +124,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   6240
-         TabIndex        =   21
+         TabIndex        =   16
          Text            =   "255"
          Top             =   600
          Width           =   435
@@ -141,7 +141,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   5760
-         TabIndex        =   20
+         TabIndex        =   15
          Text            =   "255"
          Top             =   600
          Width           =   435
@@ -158,7 +158,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   5280
-         TabIndex        =   19
+         TabIndex        =   14
          Text            =   "255"
          Top             =   600
          Width           =   435
@@ -175,7 +175,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   4800
-         TabIndex        =   18
+         TabIndex        =   13
          Text            =   "255"
          Top             =   600
          Width           =   435
@@ -192,7 +192,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   4320
-         TabIndex        =   16
+         TabIndex        =   11
          Text            =   "255"
          Top             =   600
          Width           =   435
@@ -209,7 +209,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   3720
-         TabIndex        =   15
+         TabIndex        =   10
          Text            =   "255"
          Top             =   600
          Width           =   435
@@ -226,7 +226,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   3240
-         TabIndex        =   13
+         TabIndex        =   8
          Text            =   "255"
          Top             =   600
          Width           =   435
@@ -243,7 +243,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   2400
-         TabIndex        =   11
+         TabIndex        =   6
          Text            =   "65536"
          Top             =   600
          Width           =   735
@@ -260,7 +260,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   1560
-         TabIndex        =   9
+         TabIndex        =   4
          Text            =   "65536"
          Top             =   600
          Width           =   735
@@ -277,7 +277,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   330
          Left            =   240
-         TabIndex        =   7
+         TabIndex        =   2
          Text            =   "2147483647"
          Top             =   600
          Width           =   1215
@@ -296,7 +296,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   240
          Left            =   4320
-         TabIndex        =   17
+         TabIndex        =   12
          Top             =   360
          Width           =   495
       End
@@ -314,7 +314,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   240
          Left            =   3240
-         TabIndex        =   14
+         TabIndex        =   9
          Top             =   360
          Width           =   495
       End
@@ -332,7 +332,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   240
          Left            =   2400
-         TabIndex        =   12
+         TabIndex        =   7
          Top             =   360
          Width           =   495
       End
@@ -350,7 +350,7 @@ Begin VB.Form FMain
          EndProperty
          Height          =   240
          Left            =   1560
-         TabIndex        =   10
+         TabIndex        =   5
          Top             =   360
          Width           =   495
       End
@@ -368,42 +368,10 @@ Begin VB.Form FMain
          EndProperty
          Height          =   240
          Left            =   240
-         TabIndex        =   8
+         TabIndex        =   3
          Top             =   360
          Width           =   495
       End
-   End
-   Begin VB.CommandButton Command4 
-      Caption         =   "Command4"
-      Height          =   375
-      Left            =   4560
-      TabIndex        =   5
-      Top             =   4080
-      Width           =   1335
-   End
-   Begin VB.CommandButton Command3 
-      Caption         =   "Command3"
-      Height          =   375
-      Left            =   3120
-      TabIndex        =   4
-      Top             =   4080
-      Width           =   1335
-   End
-   Begin VB.CommandButton Command2 
-      Caption         =   "Command2"
-      Height          =   375
-      Left            =   1680
-      TabIndex        =   3
-      Top             =   4080
-      Width           =   1335
-   End
-   Begin VB.CommandButton Command1 
-      Caption         =   "Command1"
-      Height          =   375
-      Left            =   240
-      TabIndex        =   2
-      Top             =   4080
-      Width           =   1335
    End
    Begin VB.ListBox List1 
       BeginProperty Font 
@@ -416,19 +384,10 @@ Begin VB.Form FMain
          Strikethrough   =   0   'False
       EndProperty
       Height          =   2085
-      Left            =   240
+      Left            =   120
       TabIndex        =   0
       Top             =   1800
-      Width           =   7215
-   End
-   Begin VB.Label Label1 
-      AutoSize        =   -1  'True
-      Caption         =   "Label1"
-      Height          =   195
-      Left            =   240
-      TabIndex        =   1
-      Top             =   4560
-      Width           =   480
+      Width           =   7455
    End
 End
 Attribute VB_Name = "FMain"
@@ -437,42 +396,44 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Private m_List As Collection
 Private m_Guid As Guid
+Private m_Indx As Long
 
 Private Sub Form_Load()
-    
-    'CmbDecHex.Text = "Hex"
+    Me.Caption = Me.Caption & " v" & App.Major & "." & App.Minor & "." & App.Revision
+    Set m_List = New Collection
     BtnCreateGUID_Click
-    
-    'Set m_Guid = MNew.GuidCo
-'
-'    Me.Caption = "Testing Class Guid " & App.Major & "." & App.Minor & "." & App.Revision
-'    With List1
-'        .Clear
-'        .AddItem """{64440490-4c8b-11d1-8b70-080036b11a03}"""
-'        .AddItem "{64440490-4C8B-11D1-8B70-080036B11A03}"
-'        '64440490-4C8B-11D1-8B70-080036B11A03
-'        .AddItem "0x64440490, 0x4C8B, 0x11D1, 0x8B, 0x70, 0x08, 0x00, 0x36, 0xB1, 0x1A, 0x03"
-'        '.AddItem ""
-'        '.AddItem ""
-'    End With
+End Sub
+
+Private Sub Form_Resize()
+    Dim L As Single: L = List1.Left
+    Dim T As Single: T = List1.Top
+    Dim W As Single: W = Me.ScaleWidth - 2 * L
+    Dim H As Single: H = Me.ScaleHeight - T
+    If W > 0 And H > 0 Then List1.Move L, T, W, H
 End Sub
 
 Private Sub BtnCreateGUID_Click()
     Set m_Guid = MNew.GuidCo
+    m_List.Add m_Guid
     List1.AddItem m_Guid.ToStr
     UpdateView
 End Sub
 
 Private Sub BtnCreateCLSID_Click()
     Set m_Guid = MNew.GuidCo
+    m_List.Add m_Guid
     List1.AddItem m_Guid.ToStr
+    m_Indx = m_List.Count - 1
     UpdateView
 End Sub
 
 Private Sub BtnCreateUUID_Click()
     Set m_Guid = MNew.UUID
+    m_List.Add m_Guid
     List1.AddItem m_Guid.ToStr
+    m_Indx = m_List.Count - 1
     UpdateView
 End Sub
 
@@ -480,61 +441,29 @@ Private Sub CmbDecHex_Click()
     UpdateView
 End Sub
 
-Private Sub Command1_Click()
-    
-    Dim s As String: s = "{64440490-4c8b-11d1-8b70-080036b11a03}"
-    
-    Dim g1 As Guid: Set g1 = MNew.GuidS(s)
-    Dim s1 As String:   s1 = g1.ToStr
-    
-    Dim g2 As Guid: Set g2 = MNew.GuidS(s1)
-    Dim s2 As String:   s2 = g2.ToStr2
-    
-    MsgBox s & vbCrLf & s1 & vbCrLf & s2
-    
-End Sub
-
-Private Sub Command2_Click()
-    
-    Dim g1 As Guid: Set g1 = MNew.GuidCo
-    Dim s1 As String:   s1 = g1.ToStr2
-    
-    Dim g2 As Guid: Set g2 = MNew.GuidS(s1)
-    Dim s2 As String:   s2 = g2.ToStr
-    
-    MsgBox s1 & vbCrLf & s2 & vbCrLf & "g1 = g2: " & g1.IsEqual(g2)
-    
-End Sub
-
-Private Sub Command3_Click()
-    Dim g1 As Guid: Set g1 = MNew.GuidCo
-    Dim s1 As String:   s1 = g1.ToStr2
-    '
-    
-End Sub
-
-Private Sub Command4_Click()
-    'Dim g As Guid: Set g = MNew
-End Sub
-
 Private Sub List1_Click()
-    
-    Dim i As Long:   i = List1.ListIndex
-    Dim s As String: s = List1.List(i)
-    
-    m_Guid.Parse (s)
-    UpdateView
-    'Dim g1 As Guid: Set g1 = MNew.GuidS(s)
-    'Dim s1 As String:   s1 = g1.ToStr
-    
-    'Dim g2 As Guid: Set g2 = MNew.GuidS(s1)
-    'Dim s2 As String: s2 = g1.ToStr & " = " & g2.ToStr
-    
-    'Label1.Caption = s & vbCrLf & s1 & vbCrLf & s2 & vbCrLf & g1.IsEqual(g2)
-    
+    m_Indx = List1.ListIndex
+    Set m_Guid = m_List.Item(m_Indx + 1)
+    UpdateViewAllTBs
 End Sub
 
 Public Sub UpdateView()
+    UpdateViewListBox
+    UpdateViewAllTBs
+End Sub
+Private Sub UpdateViewListBox()
+    'Dim i As Long: i = m_Indx
+    'List1.List(m_Indx) = m_Guid.ToStr
+    Dim i As Long: i = List1.ListIndex
+    List1.Clear
+    Dim g As Guid
+    For Each g In m_List
+        List1.AddItem g.ToStr
+    Next
+    'If i >= 0 Then List1.Selected(i) = True
+    'List1.ListIndex = i
+End Sub
+Private Sub UpdateViewAllTBs()
     If CmbDecHex.Text = "Dec" Then
         With m_Guid
             TxtData1.Text = MUnsigned.UInt32_ToStr(.Data1)
@@ -566,36 +495,104 @@ Public Sub UpdateView()
     End If
 End Sub
 
+' ##################### '   All TxtData_LostFocus    ' ##################### '
 Private Sub TxtData1_LostFocus()
     Dim s As String: s = TxtData1.Text
-    If CmbDecHex.ListIndex = 0 Then '.Text = "Dec"
-        Dim v As Long
-        if MUnsigned.UInt32_tryParse(s)
-        m_Guid.Data1 = MUnsigned.UInt32_Parse(s)
-    Else
-        
-    End If
-    
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Long
+    If Not MUnsigned.UInt32_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data1 = v
+    UpdateView
 End Sub
 
-Private Sub TxtData43_LostFocus()
-
+Private Sub TxtData2_LostFocus()
+    Dim s As String: s = TxtData2.Text
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Integer
+    If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data2 = v
+    UpdateView
 End Sub
 
-Private Sub TxtData44_LostFocus()
-
+Private Sub TxtData3_LostFocus()
+    Dim s As String: s = TxtData3.Text
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Integer
+    If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data3 = v
+    UpdateView
 End Sub
 
-Private Sub TxtData45_LostFocus()
-
+Private Sub TxtData41_LostFocus()
+    Dim s As String: s = TxtData41.Text
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Integer
+    If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data4(0) = CByte(v)
+    UpdateView
 End Sub
 
-Private Sub TxtData46_LostFocus()
-
+Private Sub TxtData42_LostFocus()
+    Dim s As String: s = TxtData42.Text
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Integer
+    If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data4(1) = CByte(v)
+    UpdateView
 End Sub
 
-Private Sub TxtData47_LostFocus()
+Private Sub TxtData51_LostFocus()
+    Dim s As String: s = TxtData51.Text
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Integer
+    If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data4(2) = CByte(v)
+    UpdateView
+End Sub
 
+Private Sub TxtData52_LostFocus()
+    Dim s As String: s = TxtData52.Text
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Integer
+    If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data4(3) = CByte(v)
+    UpdateView
+End Sub
+
+Private Sub TxtData53_LostFocus()
+    Dim s As String: s = TxtData53.Text
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Integer
+    If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data4(4) = CByte(v)
+    UpdateView
+End Sub
+
+Private Sub TxtData54_LostFocus()
+    Dim s As String: s = TxtData54.Text
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Integer
+    If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data4(5) = CByte(v)
+    UpdateView
+End Sub
+
+Private Sub TxtData55_LostFocus()
+    Dim s As String: s = TxtData55.Text
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Integer
+    If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data4(6) = CByte(v)
+    UpdateView
+End Sub
+
+Private Sub TxtData56_LostFocus()
+    Dim s As String: s = TxtData56.Text
+    Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
+    Dim v As Integer
+    If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
+    m_Guid.Data4(7) = CByte(v)
+    UpdateView
 End Sub
 
 
