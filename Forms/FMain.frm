@@ -581,6 +581,7 @@ Private Sub mnuEditClone_Click()
 End Sub
 
 Private Sub mnuEditCopy_Click()
+    Clipboard.Clear
     Clipboard.SetText m_Guid.ToStr
 End Sub
 
