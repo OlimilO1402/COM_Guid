@@ -2,13 +2,30 @@ VERSION 5.00
 Begin VB.Form FMain 
    Caption         =   "GUID/CLSID/UUID"
    ClientHeight    =   3975
-   ClientLeft      =   120
-   ClientTop       =   465
+   ClientLeft      =   225
+   ClientTop       =   870
    ClientWidth     =   7695
    LinkTopic       =   "Form1"
    ScaleHeight     =   3975
    ScaleWidth      =   7695
    StartUpPosition =   3  'Windows-Standard
+   Begin VB.CommandButton BtnSomeTests 
+      Caption         =   "IsEqual?"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   6240
+      TabIndex        =   22
+      Top             =   120
+      Width           =   1335
+   End
    Begin VB.ComboBox CmbDecHex 
       BeginProperty Font 
          Name            =   "Tahoma"
@@ -385,9 +402,27 @@ Begin VB.Form FMain
       EndProperty
       Height          =   2085
       Left            =   120
+      MultiSelect     =   2  'Erweitert
       TabIndex        =   0
       Top             =   1800
       Width           =   7455
+   End
+   Begin VB.Menu mnuEdit 
+      Caption         =   "Edit"
+      Begin VB.Menu mnuEditClone 
+         Caption         =   "Clone"
+      End
+      Begin VB.Menu mnuEditSep1 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mnuEditCopy 
+         Caption         =   "Copy"
+         Shortcut        =   ^C
+      End
+      Begin VB.Menu mnuEditPaste 
+         Caption         =   "Paste"
+         Shortcut        =   ^V
+      End
    End
 End
 Attribute VB_Name = "FMain"
@@ -399,6 +434,46 @@ Option Explicit
 Private m_List As Collection
 Private m_Guid As Guid
 Private m_Indx As Long
+
+Private Sub BtnSomeTests_Click()
+    'Testing the functions Clone, IsEQual and IsSame
+    Dim g As Guid, g1 As Guid, g2 As Guid
+    
+    Dim i As Long
+    For i = 1 To m_List.Count
+        Set g = m_List.Item(i)
+        If List1.Selected(i - 1) Then
+            If g1 Is Nothing Then
+                Set g1 = g
+            Else
+                Set g2 = g
+                Exit For
+            End If
+        End If
+    Next
+    
+    If g1 Is Nothing Then
+        MsgBox "Please select 2 guids first"
+        Exit Sub
+    End If
+    If g2 Is Nothing Then
+        Set g2 = m_Guid
+    End If
+    MsgBox CheckSameOrEQual(g1, g2)
+    
+End Sub
+Private Function CheckSameOrEQual(g1 As Guid, g2 As Guid) As String
+    Dim s As String
+    If g1.IsEqual(g2) Then
+        s = "The data of the two Guids is equal:"
+        If g1.IsSame(g2) Then
+            s = "The two Guids are variables of the same Object:"
+        End If
+    Else
+        s = "The data of the two Guids is NOT equal:"
+    End If
+    CheckSameOrEQual = s & vbCrLf & g1.ToStr & vbCrLf & g2.ToStr
+End Function
 
 Private Sub Form_Load()
     Me.Caption = Me.Caption & " v" & App.Major & "." & App.Minor & "." & App.Revision
@@ -417,24 +492,25 @@ End Sub
 Private Sub BtnCreateGUID_Click()
     Set m_Guid = MNew.GuidCo
     m_List.Add m_Guid
+    m_Indx = m_List.Count - 1
     List1.AddItem m_Guid.ToStr
-    UpdateView
+    UpdateViewAllTBs
 End Sub
 
 Private Sub BtnCreateCLSID_Click()
     Set m_Guid = MNew.GuidCo
     m_List.Add m_Guid
-    List1.AddItem m_Guid.ToStr
     m_Indx = m_List.Count - 1
-    UpdateView
+    List1.AddItem m_Guid.ToStr
+    UpdateViewAllTBs
 End Sub
 
 Private Sub BtnCreateUUID_Click()
     Set m_Guid = MNew.UUID
     m_List.Add m_Guid
-    List1.AddItem m_Guid.ToStr
     m_Indx = m_List.Count - 1
-    UpdateView
+    List1.AddItem m_Guid.ToStr
+    UpdateViewAllTBs
 End Sub
 
 Private Sub CmbDecHex_Click()
@@ -443,6 +519,7 @@ End Sub
 
 Private Sub List1_Click()
     m_Indx = List1.ListIndex
+    If m_Indx < 0 Then Exit Sub
     Set m_Guid = m_List.Item(m_Indx + 1)
     UpdateViewAllTBs
 End Sub
@@ -451,6 +528,7 @@ Public Sub UpdateView()
     UpdateViewListBox
     UpdateViewAllTBs
 End Sub
+
 Private Sub UpdateViewListBox()
     'Dim i As Long: i = m_Indx
     'List1.List(m_Indx) = m_Guid.ToStr
@@ -463,6 +541,7 @@ Private Sub UpdateViewListBox()
     'If i >= 0 Then List1.Selected(i) = True
     'List1.ListIndex = i
 End Sub
+
 Private Sub UpdateViewAllTBs()
     If CmbDecHex.Text = "Dec" Then
         With m_Guid
@@ -493,6 +572,28 @@ Private Sub UpdateViewAllTBs()
             TxtData56.Text = Hex(.Data4(7))
         End With
     End If
+End Sub
+
+Private Sub mnuEditClone_Click()
+    Dim g As Guid: Set g = m_Guid.Clone
+    m_List.Add g
+    UpdateView
+End Sub
+
+Private Sub mnuEditCopy_Click()
+    Clipboard.SetText m_Guid.ToStr
+End Sub
+
+Private Sub mnuEditPaste_Click()
+    Dim s As String
+    If Not Clipboard.GetFormat(ClipBoardConstants.vbCFText) Then
+        MsgBox "Only paste string"
+        Exit Sub
+    End If
+    s = Clipboard.GetText
+    Set m_Guid = MNew.GuidS(s)
+    m_List.Add m_Guid
+    UpdateView
 End Sub
 
 ' ##################### '   All TxtData_LostFocus    ' ##################### '

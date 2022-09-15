@@ -23,3 +23,7 @@ End Function
 Public Function UUID() As Guid
     Set UUID = New Guid: UUID.Parse UUID.UUID
 End Function
+
+Public Function GuidPK(ByVal sGuid As String, ByVal PID As Long) As Guid
+    Set GuidPK = New Guid: GuidPK.NewPK sGuid, PID
+End Function

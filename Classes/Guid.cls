@@ -15,9 +15,7 @@ Option Explicit
 '  GUID = Globally  Unique Identifier       | the base of CLSID and UUID
 ' CLSID = Globally  Unique Class Identifier | a CLSID is a GUID that identifies a COM object
 '  UUID = Universal Unique Identifier       | used in IDL files
-
 '
-
 'https://stackoverflow.com/questions/10687505/uuid-format-8-4-4-4-12-why
 'https://www.ietf.org/rfc/rfc4122.txt
 'see chapter: "4.1.2. Layout and Byte Order"
@@ -76,7 +74,7 @@ Private Type TGuid
     Data2 As Integer       ' 2
     Data3 As Integer       ' 2
     Data4(0 To 7) As Byte  ' 8
-    Data5 As Long
+    Data5 As Long               'e.g. for the PID of PropertyKey
 End Type              'Sum: 16
 
 Private m_Guid As TGuid
@@ -114,31 +112,22 @@ Friend Sub NewPK(ByVal sGuid As String, ByVal PID As Long)
     CLSIDFromString StrPtr(sGuid), ByVal VarPtr(m_Guid)
     m_Guid.Data5 = PID
 End Sub
-'
-'Public Function GuidCo() As Guid
-'    Set GuidCo = New Guid: GuidCo.NewCo
-'End Function
-'
-'Public Function Guid(ByVal a As Long, ByVal b As Integer, ByVal c As Integer, _
-'                     ByVal d0 As Byte, ByVal d1 As Byte, ByVal d2 As Byte, ByVal d3 As Byte, _
-'                     ByVal d4 As Byte, ByVal d5 As Byte, ByVal d6 As Byte, ByVal d7 As Byte) As Guid
-'    Set Guid = New Guid: Guid.New_ a, b, c, d0, d1, d2, d3, d4, d5, d6, d7
-'End Function
-'
-'Public Function GuidS(s As String) As Guid
-'    Set GuidS = New Guid
-'    If Not GuidS.Parse(s) Then Set GuidS = Nothing
-'End Function
-'
-'Public Function GuidD(a As Long, b As Integer, c As Integer, d() As Byte) As Guid
-'    Set GuidD = New Guid: GuidD.NewD a, b, c, d
-'End Function
-'
-'Public Function UUID() As Guid
-'    Set UUID = New Guid: UUID.Parse UUID.UUID
-'End Function
 
-' ############################## '
+Friend Sub NewC(other As Guid)
+    With m_Guid
+        .Data1 = other.Data1
+        .Data2 = other.Data2
+        .Data3 = other.Data3
+        Dim i As Long
+        For i = 0 To UBound(.Data4)
+            .Data4(i) = other.Data4(i)
+        Next
+        .Data5 = other.Data5
+    End With
+End Sub
+
+'
+' v ############################## v '    Constructor-functions    ' v ############################## v '
 'Public Function GuidCo() As Guid
 '    Set Guid = New Guid: Guid.NewCo
 'End Function
@@ -160,12 +149,10 @@ End Sub
 'Public Function GuidPK(ByVal sGuid As String, ByVal PID As Long) As Guid
 '    Set GuidPK = New Guid: GuidPK.NewPK sGuid, PID
 'End Function
-' ############################## '
+' ^ ############################## ^ '    Constructor-functions    ' ^ ############################## ^ '
 
 Friend Function Clone() As Guid
-    With m_Guid
-        Set Clone = New Guid: Clone.NewD .Data1, .Data2, .Data3, .Data4
-    End With
+    Set Clone = New Guid: Clone.NewC Me
 End Function
 
 Public Property Let Data1(ByVal Value As Long)
@@ -198,6 +185,17 @@ Public Property Get Data4(ByVal Index As Long) As Byte
     Data4 = m_Guid.Data4(Index)
 End Property
 
+Public Property Let Data4Arr(Values() As Byte)
+    Dim i As Long, u As Long: u = UBound(Values)
+    u = IIf(u < 7, u, 7)
+    For i = 0 To u
+        m_Guid.Data4(i) = Values(i)
+    Next
+End Property
+Public Property Get Data4Arr() As Byte()
+    Data4Arr = m_Guid.Data4
+End Property
+
 Public Property Let Data5(ByVal Value As Long)
     m_Guid.Data5 = Value
 End Property
@@ -218,6 +216,7 @@ Friend Property Get IsEqual(other As Guid) As Boolean
         For i = 0 To 7
             If .Data4(i) <> other.Data4(i) Then Exit Property
         Next
+        If .Data5 <> other.Data5 Then Exit Property
     End With
     IsEqual = True
 End Property
@@ -359,7 +358,8 @@ Public Function ParseCLSID(ByVal s As String) As Boolean
 End Function
 
 ' ############################## '    UUID    ' ############################## '
-
+'for the following Code all credits are going to ObiWan
+'https://groups.google.com/g/microsoft.public.vb.general.discussion/c/sq9TCgaqgLM
 ' =========================================================
 ' generates a v4 UUID (http://www.ietf.org/rfc/rfc4122.txt)
 ' =========================================================
