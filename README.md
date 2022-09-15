@@ -8,5 +8,11 @@
 
 Project started in july 2022.  
 working with guids made easy with the Guid class  
-
+For compiling you need the following additional files/repos not contained in this repo.  
+Modules:
+* Asm_Unsigned\Modules\MUnsigned  
+* Ptr_Pointers\Modules\MPtr  
+*  Sys_Strings\Modules\MString  
+  
 ![COMGuid Image](Resources/COMGuid.png "COMGuid Image")
+
