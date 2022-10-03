@@ -251,6 +251,12 @@ Friend Function ToStr2() As String
     ToStr2 = s
 End Function
 
+Private Function ToStr3() As String
+    Dim lpstr As LongPtr
+    Dim hr As Long: hr = StringFromCLSID(m_Guid, lpstr)
+    ToStr3 = MString.PtrToStringCo(lpstr)
+End Function
+
 Public Function Parse(ByVal s As String) As Boolean
     'try to have only hex-string at the end
     'filter everything non hex string
