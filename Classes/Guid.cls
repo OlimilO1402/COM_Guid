@@ -15,6 +15,7 @@ Option Explicit
 '  GUID = Globally  Unique Identifier       | the base of CLSID and UUID
 ' CLSID = Globally  Unique Class Identifier | a CLSID is a GUID that identifies a COM object
 '  UUID = Universal Unique Identifier       | used in IDL files
+'   IID = Interface Identifier
 '
 'https://stackoverflow.com/questions/10687505/uuid-format-8-4-4-4-12-why
 'https://www.ietf.org/rfc/rfc4122.txt
@@ -73,35 +74,36 @@ Private Type TGuid
     Data1 As Long          ' 4
     Data2 As Integer       ' 2
     Data3 As Integer       ' 2
-    Data4(0 To 7) As Byte  ' 8
-    Data5 As Long               'e.g. for the PID of PropertyKey
-End Type              'Sum: 16
+    Data5(0 To 7) As Byte  ' 8
+                      'Sum: 16
+    PID   As Long     'e.g. for the PID of a PropertyKey
+End Type
 
 Private m_Guid As TGuid
 
-Private Declare Sub CoCreateGuid Lib "ole32" (ByRef PGuid As Any)
+Private Declare Sub CoCreateGuid Lib "ole32" (ByRef pGuid As Any)
 
-Private Declare Function StringFromCLSID Lib "ole32" (ByRef pCLSID As Any, ByRef pOleStr As Long) As Long
+Private Declare Function StringFromCLSID Lib "ole32" (ByRef pCLSID As Any, ByRef pOleStr As LongPtr) As Long
 Private Declare Function CLSIDFromString Lib "ole32" (ByVal pString As Long, ByRef pCLSID As Any) As Long
 
-Private Declare Function StringFromGUID2 Lib "ole32" (ByRef PGuid As Any, ByVal lpsz As Long, ByVal cchMax As Long) As Long
+Private Declare Function StringFromGUID2 Lib "ole32" (ByRef pGuid As Any, ByVal lpsz As LongPtr, ByVal cchMax As Long) As Long
 'Declare Function GUIDFromString Lib "shell32" (ByVal rguid As Long, ByVal lpsz As Long, ByVal cchMax As Long) As Long
 
 ' Windows crypto RNG API
 Private Declare Function RtlGenRandom Lib "advapi32" Alias "SystemFunction036" (ByVal pBuff As Long, ByVal dwLen As Long) As Long
 
-Friend Sub New_(ByVal a As Long, ByVal b As Integer, ByVal c As Integer, _
-                ByVal d0 As Byte, ByVal d1 As Byte, ByVal d2 As Byte, ByVal d3 As Byte, _
-                ByVal d4 As Byte, ByVal d5 As Byte, ByVal d6 As Byte, ByVal d7 As Byte)
+Friend Sub New_(Data1 As Long, Data2 As Integer, Data3 As Integer, _
+                Data50 As Byte, Data51 As Byte, Data52 As Byte, Data53 As Byte, _
+                Data54 As Byte, Data55 As Byte, Data56 As Byte, Data57 As Byte)
     With m_Guid
-        .Data1 = a: .Data2 = b: .Data3 = c
-        .Data4(0) = d0: .Data4(1) = d1: .Data4(2) = d2: .Data4(3) = d3
-        .Data4(4) = d4: .Data4(5) = d5: .Data4(6) = d6: .Data4(7) = d7
+        .Data1 = Data1: .Data2 = Data2: .Data3 = Data3
+        .Data5(0) = Data50: .Data5(1) = Data51: .Data5(2) = Data52: .Data5(3) = Data53
+        .Data5(4) = Data54: .Data5(5) = Data55: .Data5(6) = Data56: .Data5(7) = Data57
     End With
 End Sub
 
-Friend Sub NewD(ByVal a As Long, ByVal b As Integer, ByVal c As Integer, d() As Byte)
-    New_ a, b, c, d(0), d(1), d(2), d(3), d(4), d(5), d(6), d(7)
+Friend Sub NewD(Data1 As Long, Data2 As Integer, Data3 As Integer, Data5() As Byte)
+    New_ Data1, Data2, Data3, Data5(0), Data5(1), Data5(2), Data5(3), Data5(4), Data5(5), Data5(6), Data5(7)
 End Sub
 
 Friend Sub NewCo()
@@ -110,7 +112,7 @@ End Sub
 
 Friend Sub NewPK(ByVal sGuid As String, ByVal PID As Long)
     CLSIDFromString StrPtr(sGuid), ByVal VarPtr(m_Guid)
-    m_Guid.Data5 = PID
+    m_Guid.PID = PID
 End Sub
 
 Friend Sub NewC(other As Guid)
@@ -176,31 +178,38 @@ Public Property Get Data3() As Integer
     Data3 = m_Guid.Data3
 End Property
 
-Public Property Let Data4(ByVal Index As Long, ByVal Value As Byte)
-    If Index < 0 Or 7 < Index Then Exit Property
-    m_Guid.Data4(Index) = Value
+Public Property Let Data4(ByVal Value As Integer)
+    'm_Guid.Data3 = Value
 End Property
-Public Property Get Data4(ByVal Index As Long) As Byte
-    If Index < 0 Or 7 < Index Then Exit Property
-    Data4 = m_Guid.Data4(Index)
+Public Property Get Data4() As Integer
+    'Data4 = m_Guid.Data
 End Property
 
-Public Property Let Data4Arr(Values() As Byte)
+Public Property Let Data5(ByVal Index As Long, ByVal Value As Byte)
+    If Index < 0 Or 7 < Index Then Exit Property
+    m_Guid.Data5(Index) = Value
+End Property
+Public Property Get Data5(ByVal Index As Long) As Byte
+    If Index < 0 Or 7 < Index Then Exit Property
+    Data5 = m_Guid.Data5(Index)
+End Property
+
+Public Property Let Data5Arr(Values() As Byte)
     Dim i As Long, u As Long: u = UBound(Values)
     u = IIf(u < 7, u, 7)
     For i = 0 To u
-        m_Guid.Data4(i) = Values(i)
+        m_Guid.Data5(i) = Values(i)
     Next
 End Property
-Public Property Get Data4Arr() As Byte()
-    Data4Arr = m_Guid.Data4
+Public Property Get Data5Arr() As Byte()
+    Data5Arr = m_Guid.Data5
 End Property
 
-Public Property Let Data5(ByVal Value As Long)
-    m_Guid.Data5 = Value
+Public Property Let PID(ByVal Value As Long)
+    m_Guid.PID = Value
 End Property
-Public Property Get Data5() As Long
-    Data5 = m_Guid.Data5
+Public Property Get PID() As Long
+    PID = m_Guid.PID
 End Property
 
 Public Property Get Ptr()
@@ -214,9 +223,9 @@ Friend Property Get IsEqual(other As Guid) As Boolean
         If .Data3 <> other.Data3 Then Exit Property
         Dim i As Long
         For i = 0 To 7
-            If .Data4(i) <> other.Data4(i) Then Exit Property
+            If .Data5(i) <> other.Data5(i) Then Exit Property
         Next
-        If .Data5 <> other.Data5 Then Exit Property
+        If .PID <> other.PID Then Exit Property
     End With
     IsEqual = True
 End Property
@@ -225,22 +234,29 @@ Friend Property Get IsSame(other As Guid) As Boolean
     IsSame = Me.Ptr = other.Ptr
 End Property
 
-Private Function Hex2(ByVal Value As Byte) As String
-    Hex2 = Hex(Value): If Len(Hex2) < 2 Then Hex2 = "0" & Hex2
+Friend Function ToVBGuid() As MVBGuid.VBGuid
+    LSet ToVBGuid = m_Guid
+    'With m_Guid
+    '    ToVBGuid = MVBGuid.New_VBGuid(.Data1, .Data2, .Data3, .Data5(0), .Data5(1), .Data5(2), .Data5(3), .Data5(4), .Data5(5), .Data5(6), .Data5(7))
+    'End With
 End Function
 
-Private Function Hex4(ByVal Value As Integer) As String
-    Hex4 = Hex(Value): If Len(Hex4) < 4 Then Hex4 = String(4 - Len(Hex4), "0") & Hex4
-End Function
-
-Private Function Hex8(ByVal Value As Long) As String
-    Hex8 = Hex(Value): If Len(Hex8) < 8 Then Hex8 = String(8 - Len(Hex8), "0") & Hex8
-End Function
+'Private Function Hex2(ByVal Value As Byte) As String
+'    Hex2 = Hex(Value): If Len(Hex2) < 2 Then Hex2 = "0" & Hex2
+'End Function
+'
+'Private Function Hex4(ByVal Value As Integer) As String
+'    Hex4 = Hex(Value): If Len(Hex4) < 4 Then Hex4 = String(4 - Len(Hex4), "0") & Hex4
+'End Function
+'
+'Private Function Hex8(ByVal Value As Long) As String
+'    Hex8 = Hex(Value): If Len(Hex8) < 8 Then Hex8 = String(8 - Len(Hex8), "0") & Hex8
+'End Function
 
 Friend Function ToStr() As String
     'The function ToStr in pure VB
     With m_Guid
-        ToStr = "{" & LCase(Hex8(.Data1) & "-" & Hex4(.Data2) & "-" & Hex4(.Data3) & "-" & Hex2(.Data4(0)) & Hex2(.Data4(1)) & "-" & Hex2(.Data4(2)) & Hex2(.Data4(3)) & Hex2(.Data4(4)) & Hex2(.Data4(5)) & Hex2(.Data4(6)) & Hex2(.Data4(7))) & "}"
+        ToStr = "{" & LCase(Hex8(.Data1) & "-" & Hex4(.Data2) & "-" & Hex4(.Data3) & "-" & Hex2(.Data5(0)) & Hex2(.Data5(1)) & "-" & Hex2(.Data5(2)) & Hex2(.Data5(3)) & Hex2(.Data5(4)) & Hex2(.Data5(5)) & Hex2(.Data5(6)) & Hex2(.Data5(7))) & "}"
     End With
 End Function
 
@@ -279,19 +295,19 @@ Public Function Parse(ByVal s As String) As Boolean
             If u >= 3 Then
                 ati.Value = CInt("&H" & sa(3))
                 LSet atb2 = ati
-                .Data4(0) = atb2.Value(1)
-                .Data4(1) = atb2.Value(0)
+                .Data5(0) = atb2.Value(1)
+                .Data5(1) = atb2.Value(0)
                 If u >= 4 Then
                     ati.Value = CInt("&H" & Left(sa(4), 4))
                     LSet atb2 = ati
-                    .Data4(2) = atb2.Value(1)
-                    .Data4(3) = atb2.Value(0)
+                    .Data5(2) = atb2.Value(1)
+                    .Data5(3) = atb2.Value(0)
                     atl.Value = CLng("&H" & Mid(sa(4), 5))
                     LSet atb4 = atl
-                    .Data4(4) = atb4.Value(3)
-                    .Data4(5) = atb4.Value(2)
-                    .Data4(6) = atb4.Value(1)
-                    .Data4(7) = atb4.Value(0)
+                    .Data5(4) = atb4.Value(3)
+                    .Data5(5) = atb4.Value(2)
+                    .Data5(6) = atb4.Value(1)
+                    .Data5(7) = atb4.Value(0)
                 End If
             End If
         End With
@@ -303,14 +319,14 @@ Public Function Parse(ByVal s As String) As Boolean
             If u >= 0 Then .Data1 = ParseHexOrDecLng(sa(0))
             If u >= 1 Then .Data2 = ParseHexOrDecInt(sa(1))
             If u >= 2 Then .Data3 = ParseHexOrDecInt(sa(2))
-            If u >= 3 Then .Data4(0) = CByte(ParseHexOrDecInt(sa(3)))
-            If u >= 4 Then .Data4(1) = CByte(ParseHexOrDecInt(sa(4)))
-            If u >= 5 Then .Data4(2) = CByte(ParseHexOrDecInt(sa(5)))
-            If u >= 6 Then .Data4(3) = CByte(ParseHexOrDecInt(sa(6)))
-            If u >= 7 Then .Data4(4) = CByte(ParseHexOrDecInt(sa(7)))
-            If u >= 8 Then .Data4(5) = CByte(ParseHexOrDecInt(sa(8)))
-            If u >= 9 Then .Data4(6) = CByte(ParseHexOrDecInt(sa(9)))
-            If u >= 10 Then .Data4(7) = CByte(ParseHexOrDecInt(sa(10)))
+            If u >= 3 Then .Data5(0) = CByte(ParseHexOrDecInt(sa(3)))
+            If u >= 4 Then .Data5(1) = CByte(ParseHexOrDecInt(sa(4)))
+            If u >= 5 Then .Data5(2) = CByte(ParseHexOrDecInt(sa(5)))
+            If u >= 6 Then .Data5(3) = CByte(ParseHexOrDecInt(sa(6)))
+            If u >= 7 Then .Data5(4) = CByte(ParseHexOrDecInt(sa(7)))
+            If u >= 8 Then .Data5(5) = CByte(ParseHexOrDecInt(sa(8)))
+            If u >= 9 Then .Data5(6) = CByte(ParseHexOrDecInt(sa(9)))
+            If u >= 10 Then .Data5(7) = CByte(ParseHexOrDecInt(sa(10)))
         End With
         Parse = True
     End If

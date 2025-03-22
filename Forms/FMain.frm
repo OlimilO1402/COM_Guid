@@ -5,38 +5,37 @@ Begin VB.Form FMain
    ClientLeft      =   225
    ClientTop       =   870
    ClientWidth     =   7695
+   BeginProperty Font 
+      Name            =   "Segoe UI"
+      Size            =   9.75
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    LinkTopic       =   "Form1"
    ScaleHeight     =   3975
    ScaleWidth      =   7695
    StartUpPosition =   3  'Windows-Standard
    Begin VB.CommandButton BtnSomeTests 
       Caption         =   "IsEqual?"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
-      Left            =   6240
+      Left            =   6360
       TabIndex        =   22
       Top             =   120
-      Width           =   1335
+      Width           =   1215
+   End
+   Begin VB.CommandButton BtnTestVBGuid 
+      Caption         =   "Test VBGuid"
+      Height          =   615
+      Left            =   5280
+      TabIndex        =   23
+      Top             =   0
+      Width           =   1095
    End
    Begin VB.ComboBox CmbDecHex 
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   360
+      Height          =   375
       ItemData        =   "FMain.frx":0000
       Left            =   4440
       List            =   "FMain.frx":000A
@@ -47,15 +46,6 @@ Begin VB.Form FMain
    End
    Begin VB.CommandButton BtnCreateUUID 
       Caption         =   "Create UUID"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
       Left            =   3000
       TabIndex        =   20
@@ -64,15 +54,6 @@ Begin VB.Form FMain
    End
    Begin VB.CommandButton BtnCreateCLSID 
       Caption         =   "Create CLSID"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
       Left            =   1560
       TabIndex        =   19
@@ -81,15 +62,6 @@ Begin VB.Form FMain
    End
    Begin VB.CommandButton BtnCreateGUID 
       Caption         =   "Create GUID"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   375
       Left            =   120
       TabIndex        =   18
@@ -98,15 +70,6 @@ Begin VB.Form FMain
    End
    Begin VB.Frame Frame1 
       Caption         =   "GUID / CLSID / UUID: 1"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
       Height          =   1095
       Left            =   120
       TabIndex        =   1
@@ -302,92 +265,47 @@ Begin VB.Form FMain
       Begin VB.Label LblData5 
          AutoSize        =   -1  'True
          Caption         =   "Data5"
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   240
+         Height          =   255
          Left            =   4320
          TabIndex        =   12
          Top             =   360
-         Width           =   495
+         Width           =   510
       End
       Begin VB.Label LblData4 
          AutoSize        =   -1  'True
          Caption         =   "Data4"
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   240
+         Height          =   255
          Left            =   3240
          TabIndex        =   9
          Top             =   360
-         Width           =   495
+         Width           =   510
       End
       Begin VB.Label LblData3 
          AutoSize        =   -1  'True
          Caption         =   "Data3"
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   240
+         Height          =   255
          Left            =   2400
          TabIndex        =   7
          Top             =   360
-         Width           =   495
+         Width           =   510
       End
       Begin VB.Label LblData2 
          AutoSize        =   -1  'True
          Caption         =   "Data2"
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   240
+         Height          =   255
          Left            =   1560
          TabIndex        =   5
          Top             =   360
-         Width           =   495
+         Width           =   510
       End
       Begin VB.Label LblData1 
          AutoSize        =   -1  'True
          Caption         =   "Data1"
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   240
+         Height          =   255
          Left            =   240
          TabIndex        =   3
          Top             =   360
-         Width           =   495
+         Width           =   510
       End
    End
    Begin VB.ListBox List1 
@@ -475,6 +393,13 @@ Private Function CheckSameOrEQual(g1 As Guid, g2 As Guid) As String
     CheckSameOrEQual = s & vbCrLf & g1.ToStr & vbCrLf & g2.ToStr
 End Function
 
+Private Sub BtnTestVBGuid_Click()
+    MVBGuid.Init
+    MsgBox "IID_IUnknown.Equals( _" & vbCrLf & VBGuid_ToStr(MVBGuid.IID_IUnknown) & ", _" & vbCrLf & sIID_IUnknown & ") = " & MVBGuid.VBGuid_Equals(MVBGuid.IID_IUnknown, MVBGuid.New_VBGuidS(sIID_IUnknown))
+    MsgBox "IID_IDispatch.Equals( _" & vbCrLf & VBGuid_ToStr(MVBGuid.IID_IDispatch) & ", _" & vbCrLf & sIID_IDispatch & ") = " & MVBGuid.VBGuid_Equals(MVBGuid.IID_IDispatch, MVBGuid.New_VBGuidS(sIID_IDispatch))
+    MsgBox "IID_IEnumVariant.Equals( _" & vbCrLf & VBGuid_ToStr(MVBGuid.IID_IEnumVariant) & ", _" & vbCrLf & sIID_IEnumVariant & ") = " & MVBGuid.VBGuid_Equals(MVBGuid.IID_IEnumVariant, MVBGuid.New_VBGuidS(sIID_IEnumVariant))
+End Sub
+
 Private Sub Form_Load()
     Me.Caption = Me.Caption & " v" & App.Major & "." & App.Minor & "." & App.Revision
     Set m_List = New Collection
@@ -482,11 +407,11 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_Resize()
-    Dim L As Single: L = List1.Left
+    Dim l As Single: l = List1.Left
     Dim T As Single: T = List1.Top
-    Dim W As Single: W = Me.ScaleWidth - 2 * L
+    Dim W As Single: W = Me.ScaleWidth - 2 * l
     Dim H As Single: H = Me.ScaleHeight - T
-    If W > 0 And H > 0 Then List1.Move L, T, W, H
+    If W > 0 And H > 0 Then List1.Move l, T, W, H
 End Sub
 
 Private Sub BtnCreateGUID_Click()
@@ -548,28 +473,28 @@ Private Sub UpdateViewAllTBs()
             TxtData1.Text = MUnsigned.UInt32_ToStr(.Data1)
             TxtData2.Text = MUnsigned.UInt16_ToStr(.Data2)
             TxtData3.Text = MUnsigned.UInt16_ToStr(.Data3)
-            TxtData41.Text = .Data4(0)
-            TxtData42.Text = .Data4(1)
-            TxtData51.Text = .Data4(2)
-            TxtData52.Text = .Data4(3)
-            TxtData53.Text = .Data4(4)
-            TxtData54.Text = .Data4(5)
-            TxtData55.Text = .Data4(6)
-            TxtData56.Text = .Data4(7)
+            TxtData41.Text = .Data5(0)
+            TxtData42.Text = .Data5(1)
+            TxtData51.Text = .Data5(2)
+            TxtData52.Text = .Data5(3)
+            TxtData53.Text = .Data5(4)
+            TxtData54.Text = .Data5(5)
+            TxtData55.Text = .Data5(6)
+            TxtData56.Text = .Data5(7)
         End With
     ElseIf CmbDecHex.Text = "Hex" Then
         With m_Guid
             TxtData1.Text = Hex(.Data1)
             TxtData2.Text = Hex(.Data2)
             TxtData3.Text = Hex(.Data3)
-            TxtData41.Text = Hex(.Data4(0))
-            TxtData42.Text = Hex(.Data4(1))
-            TxtData51.Text = Hex(.Data4(2))
-            TxtData52.Text = Hex(.Data4(3))
-            TxtData53.Text = Hex(.Data4(4))
-            TxtData54.Text = Hex(.Data4(5))
-            TxtData55.Text = Hex(.Data4(6))
-            TxtData56.Text = Hex(.Data4(7))
+            TxtData41.Text = Hex(.Data5(0))
+            TxtData42.Text = Hex(.Data5(1))
+            TxtData51.Text = Hex(.Data5(2))
+            TxtData52.Text = Hex(.Data5(3))
+            TxtData53.Text = Hex(.Data5(4))
+            TxtData54.Text = Hex(.Data5(5))
+            TxtData55.Text = Hex(.Data5(6))
+            TxtData56.Text = Hex(.Data5(7))
         End With
     End If
 End Sub
