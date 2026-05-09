@@ -27,3 +27,7 @@ End Function
 Public Function GuidPK(ByVal sGuid As String, ByVal PID As Long) As Guid
     Set GuidPK = New Guid: GuidPK.NewPK sGuid, PID
 End Function
+
+Public Function Guidlp(ByVal lpGuid As LongPtr) As Guid
+    Set Guidlp = New Guid: RtlMoveMemory ByVal Guidlp.Ptr, ByVal lpGuid, Guidlp.Size
+End Function

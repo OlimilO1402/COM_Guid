@@ -70,6 +70,11 @@ End Type
 Private Type TB16
     Value(0 To 15) As Byte
 End Type
+
+'e.g.:
+'{885FC186-4616-4E08-A3BA-AD3A440F3255}
+'12345678901234596789012345678901234567
+'37 Zeichen lang
 Private Type TGuid
     Data1 As Long          ' 4
     Data2 As Integer       ' 2
@@ -81,16 +86,36 @@ End Type
 
 Private m_Guid As TGuid
 
-Private Declare Sub CoCreateGuid Lib "ole32" (ByRef pGuid As Any)
 
-Private Declare Function StringFromCLSID Lib "ole32" (ByRef pCLSID As Any, ByRef pOleStr As LongPtr) As Long
-Private Declare Function CLSIDFromString Lib "ole32" (ByVal pString As Long, ByRef pCLSID As Any) As Long
+#If VBA7 Then
+    Private Declare PtrSafe Sub CoCreateGuid Lib "ole32" (ByRef pGuid As Any)
+    Private Declare PtrSafe Function CLSIDFromString Lib "ole32" (ByVal pString As LongPtr, ByRef pCLSID As Any) As Long
+    Private Declare PtrSafe Function StringFromIID Lib "ole32" (ByRef pIID As Any, ByRef pOleStr As LongPtr) As Long
+    Private Declare PtrSafe Function StringFromCLSID Lib "ole32" (ByRef pCLSID As Any, ByRef pOleStr As LongPtr) As Long
+    Private Declare PtrSafe Function StringFromGUID2 Lib "ole32" (ByRef pGuid As Any, ByVal lpsz As LongPtr, ByVal cchMax As Long) As Long
+    'Declare Function GUIDFromString Lib "shell32" (ByVal rguid As Long, ByVal lpsz As Long, ByVal cchMax As Long) As Long
+    ' Windows crypto RNG API
+    Private Declare PtrSafe Function RtlGenRandom Lib "advapi32" Alias "SystemFunction036" (ByVal pBuff As LongPtr, ByVal dwLen As Long) As Long
+#Else
+    Private Declare Sub CoCreateGuid Lib "ole32" (ByRef pGuid As Any)
+    Private Declare Function CLSIDFromString Lib "ole32" (ByVal pString As LongPtr, ByRef pCLSID As Any) As Long
+    Private Declare Function StringFromIID Lib "ole32" (ByRef pIID As Any, ByRef pOleStr As LongPtr) As Long
+    Private Declare Function StringFromCLSID Lib "ole32" (ByRef pCLSID As Any, ByRef pOleStr As LongPtr) As Long
+    Private Declare Function StringFromGUID2 Lib "ole32" (ByRef pGuid As Any, ByVal lpsz As LongPtr, ByVal cchMax As Long) As Long
+    'Declare Function GUIDFromString Lib "shell32" (ByVal rguid As Long, ByVal lpsz As Long, ByVal cchMax As Long) As Long
+    ' Windows crypto RNG API
+    Private Declare Function RtlGenRandom Lib "advapi32" Alias "SystemFunction036" (ByVal pBuff As LongPtr, ByVal dwLen As Long) As Long
+#End If
 
-Private Declare Function StringFromGUID2 Lib "ole32" (ByRef pGuid As Any, ByVal lpsz As LongPtr, ByVal cchMax As Long) As Long
-'Declare Function GUIDFromString Lib "shell32" (ByVal rguid As Long, ByVal lpsz As Long, ByVal cchMax As Long) As Long
-
-' Windows crypto RNG API
-Private Declare Function RtlGenRandom Lib "advapi32" Alias "SystemFunction036" (ByVal pBuff As Long, ByVal dwLen As Long) As Long
+Private Sub Class_Initialize()
+    With m_Guid
+        .Data1 = 1
+        .Data2 = 2
+        .Data3 = 3
+        .Data5(0) = 4
+        .Data5(2) = 5
+    End With
+End Sub
 
 Friend Sub New_(Data1 As Long, Data2 As Integer, Data3 As Integer, _
                 Data50 As Byte, Data51 As Byte, Data52 As Byte, Data53 As Byte, _
@@ -121,15 +146,16 @@ Friend Sub NewC(other As Guid)
         .Data2 = other.Data2
         .Data3 = other.Data3
         Dim i As Long
-        For i = 0 To UBound(.Data4)
-            .Data4(i) = other.Data4(i)
+        For i = 0 To UBound(.Data5)
+            .Data5(i) = other.Data5(i)
         Next
-        .Data5 = other.Data5
+        '.Data5 = other.Data5
     End With
 End Sub
 
 '
 ' v ############################## v '    Constructor-functions    ' v ############################## v '
+'Copy to MNew.bas
 'Public Function GuidCo() As Guid
 '    Set Guid = New Guid: Guid.NewCo
 'End Function
@@ -150,6 +176,9 @@ End Sub
 'End Function
 'Public Function GuidPK(ByVal sGuid As String, ByVal PID As Long) As Guid
 '    Set GuidPK = New Guid: GuidPK.NewPK sGuid, PID
+'End Function
+'Public Function Guidlp(ByVal lpGuid As LongPtr) As Guid
+'    Set Guidlp = New Guid: RtlMoveMemory ByVal Guidlp.Ptr, ByVal lpGuid, Guidlp.Size
 'End Function
 ' ^ ############################## ^ '    Constructor-functions    ' ^ ############################## ^ '
 
@@ -216,6 +245,10 @@ Public Property Get Ptr()
     Ptr = VarPtr(m_Guid)
 End Property
 
+Public Property Get Size() As Long
+    Size = LenB(m_Guid) '16 Bytes
+End Property
+
 Friend Property Get IsEqual(other As Guid) As Boolean
     With m_Guid
         If .Data1 <> other.Data1 Then Exit Property
@@ -234,24 +267,24 @@ Friend Property Get IsSame(other As Guid) As Boolean
     IsSame = Me.Ptr = other.Ptr
 End Property
 
-Friend Function ToVBGuid() As MVBGuid.VBGuid
-    LSet ToVBGuid = m_Guid
-    'With m_Guid
-    '    ToVBGuid = MVBGuid.New_VBGuid(.Data1, .Data2, .Data3, .Data5(0), .Data5(1), .Data5(2), .Data5(3), .Data5(4), .Data5(5), .Data5(6), .Data5(7))
-    'End With
+'Friend Function ToVBGuid() As MVBGuid.VBGuid
+'    LSet ToVBGuid = m_Guid
+'    'With m_Guid
+'    '    ToVBGuid = MVBGuid.New_VBGuid(.Data1, .Data2, .Data3, .Data5(0), .Data5(1), .Data5(2), .Data5(3), .Data5(4), .Data5(5), .Data5(6), .Data5(7))
+'    'End With
+'End Function
+
+Private Function Hex2(ByVal Value As Byte) As String
+    Hex2 = Hex(Value): If Len(Hex2) < 2 Then Hex2 = "0" & Hex2
 End Function
 
-'Private Function Hex2(ByVal Value As Byte) As String
-'    Hex2 = Hex(Value): If Len(Hex2) < 2 Then Hex2 = "0" & Hex2
-'End Function
-'
-'Private Function Hex4(ByVal Value As Integer) As String
-'    Hex4 = Hex(Value): If Len(Hex4) < 4 Then Hex4 = String(4 - Len(Hex4), "0") & Hex4
-'End Function
-'
-'Private Function Hex8(ByVal Value As Long) As String
-'    Hex8 = Hex(Value): If Len(Hex8) < 8 Then Hex8 = String(8 - Len(Hex8), "0") & Hex8
-'End Function
+Private Function Hex4(ByVal Value As Integer) As String
+    Hex4 = Hex(Value): If Len(Hex4) < 4 Then Hex4 = String(4 - Len(Hex4), "0") & Hex4
+End Function
+
+Private Function Hex8(ByVal Value As Long) As String
+    Hex8 = Hex(Value): If Len(Hex8) < 8 Then Hex8 = String(8 - Len(Hex8), "0") & Hex8
+End Function
 
 Friend Function ToStr() As String
     'The function ToStr in pure VB
@@ -431,4 +464,3 @@ Public Function UUID(Optional ByVal bBrk As Boolean = False, Optional ByVal bSep
     ' return generated and formatted UUID
     UUID = sRes
 End Function
-
