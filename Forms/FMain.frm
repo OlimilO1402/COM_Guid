@@ -408,10 +408,10 @@ End Sub
 
 Private Sub Form_Resize()
     Dim l As Single: l = List1.Left
-    Dim T As Single: T = List1.Top
+    Dim t As Single: t = List1.Top
     Dim W As Single: W = Me.ScaleWidth - 2 * l
-    Dim H As Single: H = Me.ScaleHeight - T
-    If W > 0 And H > 0 Then List1.Move l, T, W, H
+    Dim H As Single: H = Me.ScaleHeight - t
+    If W > 0 And H > 0 Then List1.Move l, t, W, H
 End Sub
 
 Private Sub BtnCreateGUID_Click()
@@ -468,33 +468,33 @@ Private Sub UpdateViewListBox()
 End Sub
 
 Private Sub UpdateViewAllTBs()
-    If CmbDecHex.Text = "Dec" Then
+    If CmbDecHex.text = "Dec" Then
         With m_Guid
-            TxtData1.Text = MUnsigned.UInt32_ToStr(.Data1)
-            TxtData2.Text = MUnsigned.UInt16_ToStr(.Data2)
-            TxtData3.Text = MUnsigned.UInt16_ToStr(.Data3)
-            TxtData41.Text = .Data5(0)
-            TxtData42.Text = .Data5(1)
-            TxtData51.Text = .Data5(2)
-            TxtData52.Text = .Data5(3)
-            TxtData53.Text = .Data5(4)
-            TxtData54.Text = .Data5(5)
-            TxtData55.Text = .Data5(6)
-            TxtData56.Text = .Data5(7)
+            TxtData1.text = MUnsigned.UInt32_ToStr(.Data1)
+            TxtData2.text = MUnsigned.UInt16_ToStr(.Data2)
+            TxtData3.text = MUnsigned.UInt16_ToStr(.Data3)
+            TxtData41.text = .Data5(0)
+            TxtData42.text = .Data5(1)
+            TxtData51.text = .Data5(2)
+            TxtData52.text = .Data5(3)
+            TxtData53.text = .Data5(4)
+            TxtData54.text = .Data5(5)
+            TxtData55.text = .Data5(6)
+            TxtData56.text = .Data5(7)
         End With
-    ElseIf CmbDecHex.Text = "Hex" Then
+    ElseIf CmbDecHex.text = "Hex" Then
         With m_Guid
-            TxtData1.Text = Hex(.Data1)
-            TxtData2.Text = Hex(.Data2)
-            TxtData3.Text = Hex(.Data3)
-            TxtData41.Text = Hex(.Data5(0))
-            TxtData42.Text = Hex(.Data5(1))
-            TxtData51.Text = Hex(.Data5(2))
-            TxtData52.Text = Hex(.Data5(3))
-            TxtData53.Text = Hex(.Data5(4))
-            TxtData54.Text = Hex(.Data5(5))
-            TxtData55.Text = Hex(.Data5(6))
-            TxtData56.Text = Hex(.Data5(7))
+            TxtData1.text = Hex(.Data1)
+            TxtData2.text = Hex(.Data2)
+            TxtData3.text = Hex(.Data3)
+            TxtData41.text = Hex(.Data5(0))
+            TxtData42.text = Hex(.Data5(1))
+            TxtData51.text = Hex(.Data5(2))
+            TxtData52.text = Hex(.Data5(3))
+            TxtData53.text = Hex(.Data5(4))
+            TxtData54.text = Hex(.Data5(5))
+            TxtData55.text = Hex(.Data5(6))
+            TxtData56.text = Hex(.Data5(7))
         End With
     End If
 End Sub
@@ -524,7 +524,7 @@ End Sub
 
 ' ##################### '   All TxtData_LostFocus    ' ##################### '
 Private Sub TxtData1_LostFocus()
-    Dim s As String: s = TxtData1.Text
+    Dim s As String: s = TxtData1.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Long
     If Not MUnsigned.UInt32_TryParse(s, v, r) Then Exit Sub
@@ -533,7 +533,7 @@ Private Sub TxtData1_LostFocus()
 End Sub
 
 Private Sub TxtData2_LostFocus()
-    Dim s As String: s = TxtData2.Text
+    Dim s As String: s = TxtData2.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Integer
     If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
@@ -542,7 +542,7 @@ Private Sub TxtData2_LostFocus()
 End Sub
 
 Private Sub TxtData3_LostFocus()
-    Dim s As String: s = TxtData3.Text
+    Dim s As String: s = TxtData3.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Integer
     If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
@@ -551,74 +551,74 @@ Private Sub TxtData3_LostFocus()
 End Sub
 
 Private Sub TxtData41_LostFocus()
-    Dim s As String: s = TxtData41.Text
+    Dim s As String: s = TxtData41.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Integer
     If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
-    m_Guid.Data4(0) = CByte(v)
+    m_Guid.Data5(0) = CByte(v)
     UpdateView
 End Sub
 
 Private Sub TxtData42_LostFocus()
-    Dim s As String: s = TxtData42.Text
+    Dim s As String: s = TxtData42.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Integer
     If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
-    m_Guid.Data4(1) = CByte(v)
+    m_Guid.Data5(1) = CByte(v)
     UpdateView
 End Sub
 
 Private Sub TxtData51_LostFocus()
-    Dim s As String: s = TxtData51.Text
+    Dim s As String: s = TxtData51.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Integer
     If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
-    m_Guid.Data4(2) = CByte(v)
+    m_Guid.Data5(2) = CByte(v)
     UpdateView
 End Sub
 
 Private Sub TxtData52_LostFocus()
-    Dim s As String: s = TxtData52.Text
+    Dim s As String: s = TxtData52.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Integer
     If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
-    m_Guid.Data4(3) = CByte(v)
+    m_Guid.Data5(3) = CByte(v)
     UpdateView
 End Sub
 
 Private Sub TxtData53_LostFocus()
-    Dim s As String: s = TxtData53.Text
+    Dim s As String: s = TxtData53.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Integer
     If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
-    m_Guid.Data4(4) = CByte(v)
+    m_Guid.Data5(4) = CByte(v)
     UpdateView
 End Sub
 
 Private Sub TxtData54_LostFocus()
-    Dim s As String: s = TxtData54.Text
+    Dim s As String: s = TxtData54.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Integer
     If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
-    m_Guid.Data4(5) = CByte(v)
+    m_Guid.Data5(5) = CByte(v)
     UpdateView
 End Sub
 
 Private Sub TxtData55_LostFocus()
-    Dim s As String: s = TxtData55.Text
+    Dim s As String: s = TxtData55.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Integer
     If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
-    m_Guid.Data4(6) = CByte(v)
+    m_Guid.Data5(6) = CByte(v)
     UpdateView
 End Sub
 
 Private Sub TxtData56_LostFocus()
-    Dim s As String: s = TxtData56.Text
+    Dim s As String: s = TxtData56.text
     Dim r As Long:   r = IIf(CmbDecHex.ListIndex = 0, 10, 16)
     Dim v As Integer
     If Not MUnsigned.UInt16_TryParse(s, v, r) Then Exit Sub
-    m_Guid.Data4(7) = CByte(v)
+    m_Guid.Data5(7) = CByte(v)
     UpdateView
 End Sub
 
